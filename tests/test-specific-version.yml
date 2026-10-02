@@ -1,0 +1,54 @@
+name: Test specific version installation
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        with:
+          version: 'v2.24.0'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - name: Assert docker-compose specific version is installed
+        run: |
+          echo "PATH: $PATH"
+          echo "Checking docker-compose availability..."
+          # Try command -v first
+          if command -v docker-compose > /dev/null 2>&1; then
+            VERSION_OUTPUT="$(docker-compose --version)"
+            echo "docker-compose version: $VERSION_OUTPUT"
+            if [ -z "$VERSION_OUTPUT" ]; then
+              echo "FAIL: docker-compose --version returned empty output"
+              exit 1
+            fi
+            if ! echo "$VERSION_OUTPUT" | grep -q "2.24.0"; then
+              echo "FAIL: expected version 2.24.0 but got: $VERSION_OUTPUT"
+              exit 1
+            fi
+            echo "PASS: docker-compose v2.24.0 is installed correctly"
+          else
+            # Try finding it in tool cache
+            TOOL_CACHE="${RUNNER_TOOL_CACHE:-/opt/hostedtoolcache}"
+            echo "Looking in tool cache: $TOOL_CACHE"
+            FOUND="$(find "$TOOL_CACHE" -name 'docker-compose' -type f 2>/dev/null | head -1)"
+            if [ -n "$FOUND" ]; then
+              echo "Found docker-compose at: $FOUND"
+              VERSION_OUTPUT="$("$FOUND" --version)"
+              echo "docker-compose version: $VERSION_OUTPUT"
+              if [ -z "$VERSION_OUTPUT" ]; then
+                echo "FAIL: docker-compose --version returned empty output"
+                exit 1
+              fi
+              if ! echo "$VERSION_OUTPUT" | grep -q "2.24.0"; then
+                echo "FAIL: expected version 2.24.0 but got: $VERSION_OUTPUT"
+                exit 1
+              fi
+              echo "PASS: docker-compose v2.24.0 is installed in tool cache"
+            else
+              echo "FAIL: docker-compose command not found in PATH or tool cache"
+              exit 1
+            fi
+          fi
