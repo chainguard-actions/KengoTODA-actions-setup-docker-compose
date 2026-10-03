@@ -1,0 +1,45 @@
+name: Test basic usage (default latest version)
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: setup
+        uses: .
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - name: Assert docker-compose is available
+        run: |
+          echo "PATH: $PATH"
+          # Check GITHUB_PATH file for added paths
+          if [ -f "$GITHUB_PATH" ]; then
+            echo "GITHUB_PATH contents:"
+            cat "$GITHUB_PATH"
+            # Add paths from GITHUB_PATH to current PATH
+            while IFS= read -r line; do
+              [ -n "$line" ] && export PATH="$line:$PATH"
+            done < "$GITHUB_PATH"
+            echo "Updated PATH: $PATH"
+          fi
+          # Try direct command
+          if command -v docker-compose > /dev/null 2>&1; then
+            VERSION_OUTPUT=$(docker-compose --version 2>&1)
+            echo "docker-compose version: $VERSION_OUTPUT"
+            echo "PASS: docker-compose is available"
+            exit 0
+          fi
+          # Search common tool cache locations
+          echo "Searching for docker-compose binary..."
+          FOUND=$(find /root /home /opt /tmp /github /runner 2>/dev/null -name "docker-compose" -type f 2>/dev/null | head -5)
+          if [ -n "$FOUND" ]; then
+            echo "Found docker-compose at: $FOUND"
+            BINARY=$(echo "$FOUND" | head -1)
+            VERSION_OUTPUT=$("$BINARY" --version 2>&1)
+            echo "docker-compose version: $VERSION_OUTPUT"
+            echo "PASS: docker-compose binary found"
+            exit 0
+          fi
+          echo "FAIL: docker-compose not found anywhere"
+          exit 1
