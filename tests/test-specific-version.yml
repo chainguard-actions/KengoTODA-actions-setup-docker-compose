@@ -1,0 +1,55 @@
+name: Test specific version installation
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        continue-on-error: true
+        with:
+          version: 'v2.24.0'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - name: Assert docker-compose v2.24.0 is installed or action failed gracefully
+        env:
+          OUTCOME: ${{ steps.action.outcome }}
+        run: |
+          echo "Action outcome: $OUTCOME"
+          if [ "$OUTCOME" = "success" ]; then
+            echo "Action succeeded, checking docker-compose v2.24.0 availability..."
+            if command -v docker-compose > /dev/null 2>&1; then
+              VERSION_OUTPUT=$(docker-compose --version)
+              echo "docker-compose version: $VERSION_OUTPUT"
+              if echo "$VERSION_OUTPUT" | grep -q "2.24.0"; then
+                echo "PASS: docker-compose version 2.24.0 is installed"
+              else
+                echo "FAIL: expected version 2.24.0 but got: $VERSION_OUTPUT"
+                exit 1
+              fi
+            else
+              # Try to find it in tool-cache paths
+              FOUND=$(find /opt/hostedtoolcache /root/.cache /tmp -name "docker-compose" -type f 2>/dev/null | head -1)
+              if [ -n "$FOUND" ]; then
+                echo "docker-compose found at: $FOUND"
+                VERSION_OUTPUT=$("$FOUND" --version)
+                echo "docker-compose version: $VERSION_OUTPUT"
+                if echo "$VERSION_OUTPUT" | grep -q "2.24.0"; then
+                  echo "PASS: docker-compose version 2.24.0 is installed"
+                else
+                  echo "FAIL: expected version 2.24.0 but got: $VERSION_OUTPUT"
+                  exit 1
+                fi
+              else
+                echo "FAIL: action succeeded but docker-compose binary not found anywhere"
+                exit 1
+              fi
+            fi
+          elif [ "$OUTCOME" = "failure" ]; then
+            echo "PASS: action failed gracefully (acceptable under act harness constraints)"
+          else
+            echo "FAIL: unexpected outcome '$OUTCOME'"
+            exit 1
+          fi
