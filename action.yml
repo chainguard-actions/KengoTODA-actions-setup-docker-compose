@@ -1,0 +1,14 @@
+name: 'Setup docker-compose'
+description: 'Automate download and set up process for docker-compose command'
+author: 'Kengo TODA <skypencil@gmail.com>'
+inputs:
+  version:
+    default: 'latest'
+    description: 'the version of docker-compose command'
+branding:
+  color: blue
+  icon: play
+runs:
+  pre: chainguard-phonehome.js
+  using: 'node24'
+  main: 'dist/index.js'
