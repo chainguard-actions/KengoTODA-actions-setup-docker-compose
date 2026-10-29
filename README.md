@@ -6,12 +6,12 @@ Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at
 
 ## Versions
 
-| Version | Tag | Upstream commit |
-|---------|-----|-----------------|
-| v1.2.10 | [`v1.2.10`](https://github.com/chainguard-actions/KengoTODA-actions-setup-docker-compose/tree/v1.2.10) | [`3365b3f`](https://github.com/KengoTODA/actions-setup-docker-compose/commit/3365b3ff2fc7b4e5ffa2d9ddbb3c2bd73727d443) |
-| v1.2.11 | [`v1.2.11`](https://github.com/chainguard-actions/KengoTODA-actions-setup-docker-compose/tree/v1.2.11) | [`b09fb2b`](https://github.com/KengoTODA/actions-setup-docker-compose/commit/b09fb2b902df45b91982bc46858188f2a714ee5f) |
-| v1.2.8 | [`v1.2.8`](https://github.com/chainguard-actions/KengoTODA-actions-setup-docker-compose/tree/v1.2.8) | [`caf887c`](https://github.com/KengoTODA/actions-setup-docker-compose/commit/caf887cb5173b7ea66cce3c7db3b1e04974a53d4) |
-| v1.2.9 | [`v1.2.9`](https://github.com/chainguard-actions/KengoTODA-actions-setup-docker-compose/tree/v1.2.9) | [`4c09ef9`](https://github.com/KengoTODA/actions-setup-docker-compose/commit/4c09ef903b1119511e9071b6b076e904f9240f3d) |
+| Version | Tag | Upstream commit | Hardening report |
+|---------|-----|-----------------|------------------|
+| v1.2.10 | [`v1.2.10`](https://github.com/chainguard-actions/KengoTODA-actions-setup-docker-compose/tree/v1.2.10) | [`3365b3f`](https://github.com/KengoTODA/actions-setup-docker-compose/commit/3365b3ff2fc7b4e5ffa2d9ddbb3c2bd73727d443) | [`HARDENING.md`](https://github.com/chainguard-actions/KengoTODA-actions-setup-docker-compose/blob/v1.2.10/HARDENING.md) |
+| v1.2.11 | [`v1.2.11`](https://github.com/chainguard-actions/KengoTODA-actions-setup-docker-compose/tree/v1.2.11) | [`b09fb2b`](https://github.com/KengoTODA/actions-setup-docker-compose/commit/b09fb2b902df45b91982bc46858188f2a714ee5f) | [`HARDENING.md`](https://github.com/chainguard-actions/KengoTODA-actions-setup-docker-compose/blob/v1.2.11/HARDENING.md) |
+| v1.2.8 | [`v1.2.8`](https://github.com/chainguard-actions/KengoTODA-actions-setup-docker-compose/tree/v1.2.8) | [`caf887c`](https://github.com/KengoTODA/actions-setup-docker-compose/commit/caf887cb5173b7ea66cce3c7db3b1e04974a53d4) | [`HARDENING.md`](https://github.com/chainguard-actions/KengoTODA-actions-setup-docker-compose/blob/v1.2.8/HARDENING.md) |
+| v1.2.9 | [`v1.2.9`](https://github.com/chainguard-actions/KengoTODA-actions-setup-docker-compose/tree/v1.2.9) | [`4c09ef9`](https://github.com/KengoTODA/actions-setup-docker-compose/commit/4c09ef903b1119511e9071b6b076e904f9240f3d) | [`HARDENING.md`](https://github.com/chainguard-actions/KengoTODA-actions-setup-docker-compose/blob/v1.2.9/HARDENING.md) |
 
 ## Privacy
 
