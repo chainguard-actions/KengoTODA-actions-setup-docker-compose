@@ -4,8 +4,13 @@
   "version": "v1.2.10",
   "commit_sha": "3365b3ff2fc7b4e5ffa2d9ddbb3c2bd73727d443",
   "url": "https://github.com/KengoTODA/actions-setup-docker-compose",
-  "policy_sha": "d636be7e43ef829af6e853da6b3c7566db9f72fe",
+  "policy_sha": "374911c4be584df24e6da57af2d990570ef0f859",
   "test_policy_sha": "843adf9e4b8f85d0c08b27b9d0b09dd094b54702",
   "test_agent_version": "2",
-  "harden_agent_version": "2"
+  "harden_agent_version": "2",
+  "dist_artifact": {
+    "gcs_uri": "gs://patch-actions-node-artifacts/dist-artifacts/KengoTODA/actions-setup-docker-compose/v1.2.10/sha256-501100298d7962ecf64f101bb4d9c9ad9d1aa78c145ee9d0f4d54600fc9dc4dd.tar.gz",
+    "sha256": "501100298d7962ecf64f101bb4d9c9ad9d1aa78c145ee9d0f4d54600fc9dc4dd",
+    "size_bytes": 667276
+  }
 }
